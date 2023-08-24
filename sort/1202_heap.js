@@ -1,17 +1,15 @@
-const fs = require("fs");
-const input = fs.readFileSync("./test.txt").toString().trim().split("\n");
+const fs = require('fs');
 
-const [N, K] = input.shift().split(" ");
+const input = fs.readFileSync('./1202.txt').toString().trim().split('\n');
+
+const [N, K] = input.shift().split(' ');
 
 let answer = 0;
-let bags = input.map((el) => +el).sort((a, b) => a - b);
 const jewels = input
   .splice(0, N)
-  .map((jewel) => jewel.split(" ").map((el) => +el))
+  .map(jewel => jewel.split(' ').map(el => +el))
   .sort((a, b) => a[0] - b[0]);
-
-// console.log(bags);
-// console.log(jewels);
+const bags = input.map(el => +el).sort((a, b) => a - b);
 
 class MaxHeap {
   constructor() {
@@ -29,12 +27,12 @@ class MaxHeap {
   // insert된 값을 올려주는 메소드
   upheap(pos) {
     // 마지막으로 들어온 값을 temp에 할당
-    let temp = this.heap[pos];
+    const temp = this.heap[pos];
 
     // 부모노드와 비교하며 현시점의 부모보다 크면 부모노드의 값을 아래로 내림
-    while (temp > this.heap[parseInt(pos / 2)]) {
-      this.heap[pos] = this.heap[parseInt(pos / 2)];
-      pos = parseInt(pos / 2);
+    while (temp > this.heap[Number(pos / 2)]) {
+      this.heap[pos] = this.heap[Number(pos / 2)];
+      pos = Number(pos / 2);
     }
     // 마지막으로 현시점의 노드에 temp값을 넣어준다
     this.heap[pos] = temp;
@@ -56,9 +54,9 @@ class MaxHeap {
 
   downheap(pos, len) {
     // 루트노드에 위치한 값을 임시 저장
-    let temp = this.heap[pos],
-      child;
-    while (pos <= parseInt(len / 2)) {
+    const temp = this.heap[pos];
+    let child;
+    while (pos <= Number(len / 2)) {
       child = pos * 2; // 왼쪽 자식
       // 자식노드가 하나만 존재할 수 있기 때문에 child < len
       if (child < len && this.heap[child] < this.heap[child + 1]) child++; // +1로 오른쪽자식과 비교한다

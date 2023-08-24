@@ -1,19 +1,22 @@
-const fs = require("fs");
-const input = fs.readFileSync("./1202.txt").toString().trim().split("\n");
+const fs = require('fs');
+
+const input = fs.readFileSync('./1202.txt').toString().trim().split('\n');
 
 const [N, K] = input
   .shift()
-  .split(" ")
-  .map((el) => +el);
+  .split(' ')
+  .map(el => +el);
 
 let answer = 0;
-let tmpArr = [];
 const jewels = input
   .splice(0, N)
-  .map((jewel) => jewel.split(" ").map((el) => +el))
+  .map(jewel => jewel.split(' ').map(el => +el))
   .sort((a, b) => b[1] - a[1]);
 
-let bags = input.map((el) => +el).sort((a, b) => a - b);
+const bags = input.map(el => +el).sort((a, b) => a - b);
+
+console.log(jewels);
+console.log(bags);
 
 for (let i = 0; i < jewels.length; i++) {
   for (let j = 0; j < bags.length; j++) {
@@ -26,5 +29,3 @@ for (let i = 0; i < jewels.length; i++) {
 }
 
 console.log(answer);
-
-/* ------------------------------------ - ----------------------------------- */
