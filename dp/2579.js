@@ -7,7 +7,7 @@ const stairs = input.slice(1).map(el => +el);
 console.log(N, stairs);
 
 // N번째 계단까지 있을 때 최대 합
-const dp = Array.from(new Array(N + 1));
+const dp = new Array(N + 1);
 // 계단 하나라면 하나는 무조건 밟아야함
 dp[1] = stairs[0];
 // 계단 두개면 두개 다 밟을 때가 최대값

@@ -3,7 +3,7 @@ const fs = require('fs');
 const input = fs.readFileSync('1149.txt').toString().trim().split('\n');
 const N = Number(input.slice(0, 1));
 const price = input.slice(1).map(el => el.split(' ').map(v => +v));
-// console.log(input, N, price);
+console.log(input, N, price);
 
 // N번째 집을 0,1,2 빨 파 초 색으로 칠했을 때의 최소값.
 // const dp = [...Array(N + 1)].fill([0, 0, 0]);
