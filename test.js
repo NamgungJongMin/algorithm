@@ -1,6 +1,5 @@
-const a = [
-  ['22', '55'],
-  ['23', '00'],
-];
+const a = 1200;
 
-console.log(60 * (a[1][0] - a[0][0]) + a[1][1] - a[0][1]);
+const b = String(a).replace(/0+$/, "");
+
+console.log(b);

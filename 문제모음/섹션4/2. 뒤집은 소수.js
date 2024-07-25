@@ -35,26 +35,44 @@
 //   return answer;
 // }
 
+// function solution(arr) {
+//   let answer = [];
+
+//   arr.map((value, index) => {
+//     arr[index] = Number(String(value).split("").reverse().join(""));
+//   });
+
+//   arr.map((value) => {
+//     let isPrime = true;
+
+//     for (let i = 2; i < value; i++) {
+//       if (value % i === 0) {
+//         isPrime = false;
+//         break;
+//       }
+//     }
+
+//     if (isPrime && value !== 1) {
+//       answer.push(value);
+//     }
+//   });
+
+//   return answer;
+// }
+
 function solution(arr) {
-  let answer = [];
+  const answer = [];
 
-  arr.map((value, index) => {
-    arr[index] = Number(String(value).split("").reverse().join(""));
-  });
+  arr.map((number) => {
+    const changedNumber = Number(String(number).split("").reverse().join("").replace(/^0+/, ""));
 
-  arr.map((value) => {
-    let isPrime = true;
+    if (changedNumber === 1) return;
 
-    for (let i = 2; i < value; i++) {
-      if (value % i === 0) {
-        isPrime = false;
-        break;
-      }
+    for (let i = 2; i < changedNumber - 1; i++) {
+      if (changedNumber % i === 0) return;
     }
 
-    if (isPrime && value !== 1) {
-      answer.push(value);
-    }
+    answer.push(changedNumber);
   });
 
   return answer;
