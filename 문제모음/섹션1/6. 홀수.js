@@ -1,16 +1,9 @@
 function solution(arr) {
-  let answer = [];
-  let sum = 0,
-    min = 1000;
-  for (let x of arr) {
-    if (x % 2 === 1) {
-      sum += x;
-      if (x < min) min = x;
-    }
-  }
-  answer.push(sum);
-  answer.push(min);
-  return answer;
+  const odd = arr.filter((num) => num % 2 === 1);
+  const sum = odd.reduce((acc, cur) => acc + cur);
+  const min = Math.min(...odd);
+
+  return [sum, min];
 }
 
 arr = [12, 77, 38, 41, 53, 92, 85];

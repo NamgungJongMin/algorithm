@@ -1,21 +1,15 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>출력결과</title>
-    </head>
-    <body>
-        <script>
-            function solution(day, arr){
-                let answer=0;
-                for(let x of arr){
-                    if(x%10==day) answer++;
-                }
-                
-                return answer;
-            }
-            
-            arr=[25, 23, 11, 47, 53, 17, 33];
-            console.log(solution(3, arr));
-        </script>
-    </body>
-</html>
+// function solution(day, arr) {
+//   let answer = 0;
+//   for (let x of arr) {
+//     if (x % 10 == day) answer++;
+//   }
+
+//   return answer;
+// }
+
+function solution(day, arr) {
+  return arr.reduce((acc, cur) => (cur % 10 === day ? acc + 1 : acc), 0);
+}
+
+arr = [12, 20, 54, 30, 87, 91, 30];
+console.log(solution(0, arr));
