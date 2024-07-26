@@ -64,7 +64,7 @@ function solution(arr) {
   const answer = [];
 
   arr.map((number) => {
-    const changedNumber = Number(String(number).split("").reverse().join("").replace(/^0+/, ""));
+    const changedNumber = Number(String(number).split("").reverse().join(""));
 
     if (changedNumber === 1) return;
 

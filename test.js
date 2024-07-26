@@ -1,5 +1,3 @@
-const a = 1200;
-
-const b = String(a).replace(/0+$/, "");
-
-console.log(b);
+const num = 19399;
+const changedNum = Number(String(num).replace(/9+$/, ""));
+console.log(changedNum);
