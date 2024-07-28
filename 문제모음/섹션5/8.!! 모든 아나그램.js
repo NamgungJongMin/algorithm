@@ -30,42 +30,27 @@
 //   return answer;
 // }
 
-function compareString(str1, str2) {
-  let map = new Map();
-  let answer = true;
-
-  str1.split("").map((value) => {
-    map.set(value, map.get(value) + 1 || 1);
-  });
-
-  str2.split("").map((value) => {
-    map.set(value, map.get(value) - 1);
-  });
-
-  for ([key, value] of map) {
-    if (value !== 0) answer = false;
-  }
-
-  return answer;
-}
-
-function solution(s, t) {
+function solution(str1, str2) {
   let answer = 0;
-  let length = t.length;
-  let parts = [];
-  let string = "";
 
-  for (let i = 0; i < s.length; i++) {
-    string += s[i];
-    console.log(string);
-    if (string.length === length) {
-      parts.push(string);
-      string = string.slice(1);
+  for (let lt = 0; lt < str1.length - str2.length + 1; lt++) {
+    let map = new Map();
+    let isAnagram = true;
+
+    str2
+      .toUpperCase()
+      .split("")
+      .forEach((el) => map.set(el, map.get(el) + 1 || 1));
+
+    for (let rt = lt; rt < lt + str2.length; rt++) {
+      map.set(str1.toUpperCase()[rt], map.get(str1.toUpperCase()[rt]) - 1);
     }
-  }
 
-  for (let x of parts) {
-    if (compareString(x, t)) answer++;
+    map.forEach((el) => {
+      if (el !== 0) isAnagram = false;
+    });
+
+    answer += isAnagram ? 1 : 0;
   }
 
   return answer;
