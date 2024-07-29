@@ -54,6 +54,15 @@ function solution(str1, str2) {
   return answer;
 }
 
-let a = "abacc";
-let b = "caaab";
+function sol(str1, str2) {
+  let str1C = str1.split("").sort().join("");
+  let str2C = str2.split("").sort().join("");
+  console.log(str1C, str2C);
+
+  return str1C === str2C ? "YES" : "NO";
+}
+
+let a = "0a4b2c";
+let b = "cb42a0";
 console.log(solution(a, b));
+console.log(sol(a, b));

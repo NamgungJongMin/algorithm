@@ -1,3 +1,3 @@
-const num = 19399;
-const changedNum = Number(String(num).replace(/9+$/, ""));
-console.log(changedNum);
+const a = "1203";
+const b = a.split("").sort();
+console.log(b);
