@@ -2,6 +2,7 @@
 // 정답의 범위를 정한다. 최소 9 / 최대 45
 
 function solution(m, arr) {
+  let answer = [];
   let lt = Math.max(...arr);
   let rt = arr.reduce((acc, cur) => acc + cur);
 
@@ -18,10 +19,11 @@ function solution(m, arr) {
       }
     }
 
+    console.log(lt, rt, mid, count);
+
     if (count <= m) rt = mid;
     else if (count > m) lt = mid + 1;
   }
-
   return lt;
 }
 

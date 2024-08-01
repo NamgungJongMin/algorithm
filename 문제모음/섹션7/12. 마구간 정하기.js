@@ -35,5 +35,5 @@ function solution(c, arr) {
   return answer;
 }
 
-const a = [1, 2, 8, 4, 9];
+const a = [5, 6, 8, 12, 14];
 console.log(solution(3, a));
