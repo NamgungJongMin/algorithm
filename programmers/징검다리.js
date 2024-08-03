@@ -1,10 +1,11 @@
 function solution(distance, rocks, n) {
+  let answer = 0;
   let arr = [0, ...rocks.sort((a, b) => a - b), distance];
   console.log(rocks);
   let lt = 0;
   let rt = distance;
 
-  while (lt < rt) {
+  while (lt <= rt) {
     const mid = Math.ceil((lt + rt) / 2);
     let count = 0;
     let newArr = [...arr];
@@ -20,10 +21,13 @@ function solution(distance, rocks, n) {
     console.log("count", count);
 
     if (count > n) rt = mid - 1;
-    else if (count <= n) lt = mid;
+    else if (count <= n) {
+      answer = mid;
+      lt = mid + 1;
+    }
   }
 
-  return lt;
+  return answer;
 }
 
 const distance = 25;
