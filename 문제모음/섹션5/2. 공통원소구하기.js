@@ -33,7 +33,7 @@ function solution(arr1, arr2) {
       p2++;
     }
 
-    if (p2 === arr2.length) {
+    if (p1 < p2) {
       p1++;
       p2 = 0;
     }
