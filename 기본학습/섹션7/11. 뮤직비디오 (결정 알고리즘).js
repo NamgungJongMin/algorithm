@@ -3,11 +3,11 @@
 
 function solution(m, arr) {
   let answer = 0;
-  let lt = Math.max(...arr);
-  let rt = arr.reduce((acc, cur) => acc + cur);
+  let start = Math.max(...arr);
+  let end = arr.reduce((acc, cur) => acc + cur);
 
-  while (lt <= rt) {
-    let mid = Math.ceil((lt + rt) / 2);
+  while (start <= end) {
+    let mid = Math.ceil((start + end) / 2);
     let sum = 0;
     let count = 1;
 
@@ -19,15 +19,10 @@ function solution(m, arr) {
       }
     }
 
-    console.log(lt, rt, mid, count);
-
     if (count <= m) {
-      rt = mid - 1;
+      end = mid - 1;
       answer = mid;
-    } else if (count > m) lt = mid + 1;
+    } else if (count > m) start = mid + 1;
   }
   return answer;
 }
-
-const a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-console.log(solution(3, a));
