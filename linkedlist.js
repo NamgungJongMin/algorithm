@@ -1,7 +1,6 @@
 // https://www.acmicpc.net/problem/2164
 const fs = require("fs");
 const input = fs.readFileSync("linkedlist.txt").toString().trim();
-console.log(input);
 
 class Node {
   constructor(value) {
@@ -48,8 +47,6 @@ const cards = new LinkedList();
 for (let i = 1; i <= +input; i++) {
   cards.add(i);
 }
-
-console.log(cards);
 
 while (cards.length > 1) {
   cards.remove();
