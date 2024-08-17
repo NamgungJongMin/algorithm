@@ -9,7 +9,7 @@ const permutation = (depth, leftCards, arr) => {
     return;
   }
 
-  // depth별 실행할 함수
+  // depth별 실행할 동작
   for (let i = 0; i < leftCards.length; i++) {
     const cardsArr = leftCards.filter((_, idx) => idx !== i);
     permutation(depth + 1, cardsArr, [...arr, leftCards[i]]);

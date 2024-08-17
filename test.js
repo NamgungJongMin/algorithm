@@ -1,46 +1,41 @@
-const fs = require("fs");
-const input = fs
-  .readFileSync("test.txt")
-  .toString()
-  .trim()
-  .split("\n")
-  .map((el) => el.split(" ").map((v) => +v));
-const inven = input[0][2];
-const arr = input.slice(1).reduce((acc, cur) => acc.concat(cur));
-arr.sort((a, b) => b - a);
-
+const cards = [1, 2, 3, 4, 5];
 const answer = [];
-let start = Math.min(...arr);
-let end = Math.max(...arr);
 
-for (let i = start; i <= end; i++) {
-  let time = 0;
-  let isSuccess = true;
-  let surplus = inven;
-
-  for (let j = 0; j < arr.length; j++) {
-    if (!isSuccess) break;
-    let gap = arr[j] - i;
-
-    if (gap > 0) {
-      time += gap * 2;
-      surplus += gap;
-    } else if (gap < 0) {
-      if (surplus >= Math.abs(gap)) {
-        time += Math.abs(gap);
-        surplus -= Math.abs(gap);
-      } else {
-        isSuccess = false;
-      }
-    }
+const permutation = (depth, leftCards, arr) => {
+  // 종료 조건
+  if (depth > 3) {
+    answer.push(arr);
+    return;
   }
 
-  if (isSuccess) answer.push([time, i]);
-}
+  // depth별 실행할 함수
+  for (let i = 0; i < leftCards.length; i++) {
+    const cardsArr = leftCards.filter((_, idx) => idx !== i);
+    recursive(depth + 1, cardsArr, [...arr, leftCards[i]]);
+  }
+};
 
-answer.sort((a, b) => {
-  if (a[0] === b[0]) return b[1] - a[1];
-  else return a[0] - b[0];
-});
+permutation(1, cards, []);
+console.log(answer);
 
-console.log(answer[0].join(" "));
+// const cards = [1, 2, 3, 4, 5];
+// const answer = [];
+
+// const combination = (depth, leftCards, arr) => {
+//   // 종료 조건
+//   if (depth > 3) {
+//     answer.push(arr);
+//     return;
+//   }
+
+//   // depth별 실행할 함수
+//   if (leftCards.length === 0) return;
+
+//   for (let i = 0; i < leftCards.length; i++) {
+//     const cardsArr = leftCards.slice(i + 1);
+//     combination(depth + 1, cardsArr, [...arr, leftCards[i]]);
+//   }
+// };
+
+// combination(1, cards, []);
+// console.log(answer);
