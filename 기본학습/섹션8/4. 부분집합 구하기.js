@@ -1,8 +1,8 @@
 function solution(N) {
   const answer = [];
-  const arr = Array(N)
-    .fill(0)
-    .map((_, idx) => idx + 1);
+  const arr = Array.from({ length: N }, (_, idx) => idx + 1);
+
+  console.log(arr);
 
   const recursive = (leftArr, answerArr) => {
     if (leftArr.length === 0) return;
