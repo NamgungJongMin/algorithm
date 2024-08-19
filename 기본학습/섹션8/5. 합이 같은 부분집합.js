@@ -21,5 +21,4 @@ recursive(arr, []);
 for (let i = 0; i < arr1.length; i++) {
   if (arr1[i].reduce((acc, cur) => acc + cur, 0) === arr2[i].reduce((acc, cur) => acc + cur, 0)) answer = "YES";
 }
-
 console.log(answer);

@@ -17,7 +17,7 @@ const permutation = (depth, leftCards, arr) => {
 };
 
 permutation(1, cards, []);
-console.log(answer1);
+console.log("순열", answer1);
 
 // 조합
 const answer2 = [];
@@ -38,33 +38,32 @@ const combination = (depth, leftCards, arr) => {
 };
 
 combination(1, cards, []);
-console.log(answer2);
+console.log("조합", answer2);
 
 // 중복 순열
 const answer3 = [];
-const pwr = (depth, leftCards, arr) => {
+const pwr = (depth, arr) => {
   // 종료 조건
   if (depth > 3) {
-    answer1.push(arr);
+    answer3.push(arr);
     return;
   }
 
   // depth별 실행할 함수
-  for (let i = 0; i < leftCards.length; i++) {
-    const cardsArr = leftCards.filter((_, idx) => idx !== i);
-    pwr(depth + 1, cardsArr, [...arr, leftCards[i]]);
+  for (let i = 0; i < cards.length; i++) {
+    pwr(depth + 1, [...arr, cards[i]]);
   }
 };
 
-pwr(1, cards, []);
-console.log(answer3);
+pwr(1, []);
+console.log("중복 순열", answer3);
 
 // 중복 조합
 const answer4 = [];
 const cwr = (depth, leftCards, arr) => {
   // 종료 조건
   if (depth > 3) {
-    answer3.push(arr);
+    answer4.push(arr);
     return;
   }
 
@@ -78,4 +77,4 @@ const cwr = (depth, leftCards, arr) => {
 };
 
 cwr(1, cards, []);
-console.log(answer4);
+console.log("중복 조합", answer4);
