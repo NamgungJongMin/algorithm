@@ -1,30 +1,32 @@
-const fs = require('fs');
-const file = process.platform === 'linux' ? '/dev/stdin' : './input.txt';
-const input = fs.readFileSync(file).toString().trim().split('\n');
+const fs = require("fs");
 
-const [r, c] = input[0].split(' ').map(Number);
-const arr = [];
-for (let i = 1; i <= r; i++) arr.push(input[i]);
+const input = fs.readFileSync("dev/stdin").toString().trim().split("\n");
+const arr = input.slice(1).map((el) => el.trim().split(""));
 
 const dx = [0, 0, 1, -1];
 const dy = [1, -1, 0, 0];
-const visited = new Array(26).fill(false);
-let maxDepth = 0;
+const visited = Array(26).fill(false);
+let answer = 0;
 
-function dfs(depth, x, y) {
-  maxDepth = Math.max(maxDepth, depth);
+const dfs = (depth, x, y) => {
+  answer = answer < depth ? depth : answer;
+
   for (let i = 0; i < 4; i++) {
     const nx = x + dx[i];
     const ny = y + dy[i];
-    if (nx < 0 || nx >= r || ny < 0 || ny >= c) continue;
-    if (visited[arr[nx][ny].charCodeAt() - 65]) continue;
-    visited[arr[nx][ny].charCodeAt() - 65] = true;
+
+    // 이동할 좌표가 없을 경우 continue
+    if (nx < 0 || nx >= arr[0].length || ny < 0 || ny >= arr.length) continue;
+    // 이동한 좌표의 알파벳의 아스키코드가 true면 이미 지나온 블록. continue
+    if (visited[arr[ny][nx].charCodeAt() - 65]) continue;
+
+    visited[arr[ny][nx].charCodeAt() - 65] = true;
     dfs(depth + 1, nx, ny);
-    visited[arr[nx][ny].charCodeAt() - 65] = false;
+    visited[arr[ny][nx].charCodeAt() - 65] = false;
   }
-}
+};
 
 visited[arr[0][0].charCodeAt() - 65] = true;
 dfs(1, 0, 0);
 
-console.log(maxDepth);
+console.log(answer);
