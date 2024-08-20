@@ -1,36 +1,21 @@
-// input 파싱
-let input = require("fs").readFileSync("/dev/stdin").toString().split("\n");
+const fs = require("fs");
 
-let requestLessonCount = Number(input[0]);
-if (requestLessonCount === 0) {
-  return console.log(0);
-}
-let inputSchedual = new Array(requestLessonCount);
-let dailyIncome = new Array(10000).fill(0);
+const input = fs.readFileSync("dev/stdin").toString().trim().split("\n");
+const arr = input.slice(1).map((el) => el.trim().split(" ").map(Number));
+const dailyPrice = Array(10000).fill(0);
 
-for (let i = 0; i < requestLessonCount; i++) {
-  const [lectureFee, deadLine] = input[i + 1].split(" ").map(Number);
-  inputSchedual[i] = {
-    lectureFee: lectureFee,
-    deadLine: deadLine,
-  };
-}
-// 값 기준으로 내림차순 정렬
-inputSchedual.sort((a, b) => b.lectureFee - a.lectureFee);
+arr.sort((a, b) => {
+  if (a[0] === b[0]) b[1] - a[1];
+  return b[0] - a[0];
+});
 
-// 값을 기준으로 스케쥴 확정
-for (let i = 0; i < requestLessonCount; i++) {
-  for (let j = inputSchedual[i].deadLine; j > 0; j--) {
-    if (inputSchedual[i].lectureFee > dailyIncome[j - 1]) {
-      dailyIncome[j - 1] = inputSchedual[i].lectureFee;
+for (let i = 0; i < arr.length; i++) {
+  for (let date = arr[i][1]; date > 0; date--) {
+    if (!dailyPrice[date]) {
+      dailyPrice[date] = arr[i][0];
       break;
     }
   }
 }
 
-const sumArray = (arr) => {
-  return arr.reduce(function add(sum, currValue) {
-    return sum + currValue;
-  }, 0);
-};
-console.log(sumArray(dailyIncome));
+console.log(dailyPrice.reduce((acc, cur) => acc + cur, 0));
