@@ -1,3 +1,7 @@
-const a = [3, 2, 1].sort((a, b) => a - b);
-console.log(a);
-console.log(Boolean(0));
+let a = 20;
+
+let b,
+  c,
+  d = a;
+
+console.log(d);
