@@ -24,6 +24,7 @@ function solution(c, arr) {
 
   while (lt < rt) {
     let mid = Math.ceil((lt + rt) / 2);
+
     if (count(newArr, mid) >= c) {
       answer = mid;
       lt = mid;
