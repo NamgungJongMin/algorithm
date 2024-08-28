@@ -8,7 +8,7 @@ const getPi = (string) => {
   let k = 0;
 
   for (let i = 1; i < string.length; i++) {
-    // <string[k] !== string[i] => i만 증가> (for문 continue)
+    // <string[k] === string[i] => i만 증가> (for문 continue)
     // 다르면 pi[k-1] 에 저장된 인덱스로 k를 이동
     // 더 이상 k가 왼쪽으로 이동할 수 없다면 i만 증가 (for문 continue)
     while (k > 0 && string[k] !== string[i]) {

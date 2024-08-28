@@ -1,7 +1,3 @@
-let a = 20;
+let a = -1;
 
-let b,
-  c,
-  d = a;
-
-console.log(d);
+console.log(Boolean(-1));
