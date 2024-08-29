@@ -1,3 +1,3 @@
-let a = -1;
+let a = 7;
 
-console.log(Boolean(-1));
+console.log(Math.sqrt(a));
