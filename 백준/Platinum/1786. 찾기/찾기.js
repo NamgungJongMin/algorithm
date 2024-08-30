@@ -5,7 +5,7 @@ const T = input[0].split("");
 const P = input[1].split("");
 const pi = Array(P.length).fill(0);
 
-// failure 함수를 통해 pi 테이블 설정
+// failure 함수를 통해 pi 배열 설정
 let k = 0;
 for (let i = 1; i < P.length; i++) {
   while (k > 0 && P[k] !== P[i]) {
