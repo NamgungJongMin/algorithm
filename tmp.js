@@ -1,18 +1,15 @@
-const str = "ABCABCABBD";
-const subStr = "ABCABB";
-const answerIdx = [];
+const input = [
+  [1, 2],
+  [1, 3],
+  [2, 4],
+  [2, 5],
+  [3, 4],
+];
+const graph = Array.from(Array(input.length), () => Array(input.length).fill(0));
 
-for (let i = 0; i < str.length; i++) {
-  let isMatched = true;
+input.forEach((array) => {
+  graph[array[0] - 1][array[1] - 1] = 1;
+  graph[array[1] - 1][array[0] - 1] = 1;
+});
 
-  for (let j = 0; j < subStr.length; j++) {
-    if (str[i + j] !== subStr[j]) {
-      isMatched = false;
-      break;
-    }
-  }
-
-  if (isMatched) answerIdx.push(i);
-}
-
-console.log(answerIdx);
+console.log(graph);
