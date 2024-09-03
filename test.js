@@ -1,73 +1,70 @@
 const fs = require("fs");
 
 const input = fs.readFileSync("test.txt").toString().trim().split("\n");
+const N = +input[0];
 const arr = input.slice(1).map((el) => el.split(" ").map(Number));
-const check = Array.from(Array(arr.length), () => Array(arr[0].length).fill(0));
-const queue = [];
-const dx = [0, 0, -1, 1];
-const dy = [-1, 1, 0, 0];
+let check = Array.from(Array(N), () => Array(N).fill(0));
+let queue = [];
+let answer = 0;
 
 for (let i = 0; i < arr.length; i++) {
   for (let j = 0; j < arr[0].length; j++) {
-    if (arr[i][j] === 1) {
-      check[i][j] = 1;
-      queue.push([i, j]);
-    }
-    if (arr[i][j] === -1) {
-      check[i][j] = -1;
+    if (arr[i][j] === 9) {
+      queue.push(i, j);
     }
   }
 }
 
-let ripeAll = true;
-
-for (let i = 0; i < check.length; i++) {
-  for (let j = 0; j < check[0].length; j++) {
-    if (check[i][j] === 0) {
-      ripeAll = false;
-    }
-  }
-}
-
-if (ripeAll) {
-  console.log(0);
-  return;
-}
-
+const dy = [-1, 0, 0, 1];
+const dx = [0, -1, 1, 0];
+let size = 2;
 let count = 0;
-let pointer = -1;
+let tick = 0;
 
-while (queue.length) {
-  const volume = pointer === -1 ? queue.length : queue.length - pointer - 1;
+for (let i = 0, time = 1; i < queue.length; time++) {
+  const canEat = [];
 
-  if (volume === 0) break;
-
-  for (let i = 0; i < volume; i++) {
-    pointer++;
-    const location = queue[pointer];
+  for (const { length } = queue; i < length; ) {
+    const oy = queue[i++];
+    const ox = queue[i++];
 
     for (let j = 0; j < 4; j++) {
-      const ny = location[0] + dy[j];
-      const nx = location[1] + dx[j];
+      const ny = oy + dy[j];
+      const nx = ox + dx[j];
 
-      if (nx < 0 || nx > arr[0].length - 1 || ny < 0 || ny > arr.length - 1) continue;
+      if (nx < 0 || nx > arr.length - 1 || ny < 0 || ny > arr.length - 1) continue;
       if (check[ny][nx] === 1) continue;
-      if (check[ny][nx] === -1) continue;
+      if (arr[ny][nx] !== 9 && arr[ny][nx] > size) continue;
 
+      if (arr[ny][nx] !== 0 && arr[ny][nx] !== 9 && arr[ny][nx] < size) {
+        canEat.push([ny, nx]);
+        break;
+      }
+
+      queue.push(ny, nx);
       check[ny][nx] = 1;
-      queue.push([ny, nx]);
     }
   }
-  count++;
-}
 
-for (let i = 0; i < check.length; i++) {
-  for (let j = 0; j < check[0].length; j++) {
-    if (check[i][j] === 0) {
-      console.log(-1);
-      return;
+  if (canEat.length) {
+    canEat.sort((a, b) => {
+      if (a[0] === b[0]) return a[1] - b[1];
+      return a[0] - b[0];
+    });
+    const [y, x] = canEat[0];
+    i = 0;
+    answer = time;
+
+    queue = [y, x];
+    check = Array.from(Array(N), () => Array(N).fill(0));
+    arr[y][x] = 0;
+
+    count++;
+    if (count === size) {
+      size++;
+      count = 0;
     }
   }
 }
 
-console.log(count - 1);
+console.log(answer);
