@@ -1,15 +1,31 @@
 const fs = require("fs");
 
 const input = fs.readFileSync("test.txt").toString().trim().split("\n");
-const [N, K] = input[0].split(" ").map(Number);
-const arr = input.slice(1).map((el) => el.split(" ").map(Number));
-const dp = Array.from({ length: K + 1 }, () => 0);
-console.log(dp);
+const T = +input[0];
+const arr = input.slice(1);
 
-for (let i = 0; i < N; i++) {
-  for (let j = K; j >= arr[i][0]; j--) {
-    dp[j] = Math.max(dp[j - arr[i][0]] + arr[i][1], dp[j]);
-  }
+const coins_Arr = [];
+const M_Arr = [];
+let answer = [];
+
+for (let i = 1; i < arr.length; i++) {
+  coins_Arr.push(arr[i++].split(" ").map(Number));
+  M_Arr.push(+arr[i++]);
 }
 
-console.log(dp.at(-1));
+for (let i = 0; i < T; i++) {
+  const coins = coins_Arr[i];
+  const M = M_Arr[i];
+  const dp = Array.from({ length: M + 1 }, () => 0);
+  dp[0] = 1;
+
+  for (let j = 0; j <= coins.length; j++) {
+    for (let k = coins[j]; k < dp.length; k++) {
+      dp[k] = dp[k] + dp[k - coins[j]];
+    }
+  }
+
+  answer.push(dp.at(-1));
+}
+
+console.log(answer.join("\n"));

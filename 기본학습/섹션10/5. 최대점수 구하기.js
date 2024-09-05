@@ -12,7 +12,8 @@ const dp = Array.from({ length: M + 1 }, () => 0);
 for (let i = 0; i < N; i++) {
   for (let j = M; j >= input[i][1]; j--) {
     dp[j] = Math.max(dp[j - input[i][1]] + input[i][0], dp[j]);
+    console.log(dp);
   }
 }
 
-console.log(dp.at(-1));
+// console.log(dp.at(-1));
