@@ -2,35 +2,27 @@ const fs = require("fs");
 
 const input = fs.readFileSync("test.txt").toString().trim().split("\n");
 const N = +input[0];
-const arr = input[1].split(" ").map(Number);
-const dp = Array.from({ length: N });
-const dp2 = Array.from({ length: N });
+const arr = input.slice(1).map((el) => el.split(" ").map(Number));
+const tt = [];
+let answer = 0;
 
-dp[0] = 1;
-dp2[0] = 1;
-
-for (let i = 1; i < arr.length; i++) {
-  let max = 0;
-
-  for (let j = i - 1; j >= 0; j--) {
-    if (arr[j] < arr[i] && dp[j] > max) {
-      max = dp[j];
-    }
-  }
-
-  dp[i] = max + 1;
+for (let i = 0; i < N; i++) {
+  tt.push([arr[i][0], 1]);
+  tt.push([arr[i][1], -1]);
 }
 
-for (let i = 1; i < arr.length; i++) {
-  let max = 0;
+tt.sort((a, b) => {
+  if (a[0] === b[0]) return a[1] - b[1];
+  return a[0] - b[0];
+});
 
-  for (let j = i - 1; j >= 0; j--) {
-    if (arr[i] < arr[j] && max < Math.max(dp[j], dp2[j])) {
-      max = Math.max(dp[j], dp2[j]);
-    }
-  }
+console.log(tt);
 
-  dp2[i] = max + 1;
+let count = 0;
+
+for (let i = 0; i < tt.length; i++) {
+  count += tt[i][1];
+  if (answer < count) answer = count;
 }
 
-console.log(Math.max(...dp2));
+console.log(answer);
