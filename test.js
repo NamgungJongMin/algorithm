@@ -1,35 +1,36 @@
 const fs = require("fs");
 
 const input = fs.readFileSync("test.txt").toString().trim().split("\n");
-const arr = input.slice(1).map((el) => el.split(" ").slice(1).map(Number));
-const dp = Array.from({ length: arr.length + 1 }, () => Array(arr[0].length).fill(0));
-const count = Array.from({ length: arr.length + 1 }, () => Array(arr[0].length).fill(0));
-let answer = [];
+const N = +input[0];
+const arr = input[1].split(" ").map(Number);
+const dp = Array.from({ length: N });
+const dp2 = Array.from({ length: N });
 
-for (let i = 1; i < dp.length; i++) {
-  for (let j = 0; j < dp[0].length; j++) {
-    if (j === 0) {
-      dp[i][j] = arr[i - 1][j];
-      count[i][j] = i;
-      continue;
+dp[0] = 1;
+dp2[0] = 1;
+
+for (let i = 1; i < arr.length; i++) {
+  let max = 0;
+
+  for (let j = i - 1; j >= 0; j--) {
+    if (arr[j] < arr[i] && dp[j] > max) {
+      max = dp[j];
     }
-
-    let max = dp[i][j - 1];
-
-    for (let k = i; k > 0; k--) {
-      const newProfit = arr[k - 1][j] + dp[i - k][j - 1];
-
-      if (max < newProfit) {
-        max = newProfit;
-      }
-    }
-
-    dp[i][j] = max;
   }
+
+  dp[i] = max + 1;
 }
 
-console.log(dp);
-console.log(count);
+for (let i = 1; i < arr.length; i++) {
+  let max = 0;
 
-// answer.push(dp.at(-1).at(-1));
-// console.log(answer);
+  for (let j = i - 1; j >= 0; j--) {
+    if (arr[i] < arr[j] && max < Math.max(dp[j], dp2[j])) {
+      max = Math.max(dp[j], dp2[j]);
+    }
+  }
+
+  dp2[i] = max + 1;
+}
+
+console.log(Math.max(...dp2));
