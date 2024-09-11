@@ -1,28 +1,39 @@
 const fs = require("fs");
 
 const input = fs.readFileSync("test.txt").toString().trim().split("\n");
-const N = +input[0];
 const arr = input.slice(1).map((el) => el.split(" ").map(Number));
-const tt = [];
-let answer = 0;
+const map = new Map();
 
-for (let i = 0; i < N; i++) {
-  tt.push([arr[i][0], 1]);
-  tt.push([arr[i][1], -1]);
-}
-
-tt.sort((a, b) => {
-  if (a[0] === b[0]) return a[1] - b[1];
-  return a[0] - b[0];
+arr.forEach((el) => {
+  map.set(el[0], el[1]);
 });
 
-console.log(tt);
+const q = [1];
+const check = Array.from({ length: 101 }, () => 0);
+check[1] = 1;
 
-let count = 0;
+for (let i = 0, days = 1; i < q.length; days++) {
+  for (const { length } = q; i < length; ) {
+    const cur = q[i++];
+    for (let j = 1; j <= 6; j++) {
+      const next = cur + j;
 
-for (let i = 0; i < tt.length; i++) {
-  count += tt[i][1];
-  if (answer < count) answer = count;
+      if (next === 100) {
+        console.log(days);
+        return;
+      }
+      if (next > 100) continue;
+      if (map.has(next) && !check[next]) {
+        q.push(map.get(next));
+        check[map.get(next)] = 1;
+        check[next] = 1;
+        continue;
+      }
+
+      if (!check[next]) {
+        q.push(next);
+        check[next] = 1;
+      }
+    }
+  }
 }
-
-console.log(answer);
