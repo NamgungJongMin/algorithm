@@ -1,39 +1,53 @@
 const fs = require("fs");
 
 const input = fs.readFileSync("test.txt").toString().trim().split("\n");
-const arr = input.slice(1).map((el) => el.split(" ").map(Number));
-const map = new Map();
+const test = input.slice(1).map((el) => el.split(" ").map(Number));
+let answer = [];
 
-arr.forEach((el) => {
-  map.set(el[0], el[1]);
-});
+const bfs = (before, after) => {
+  const q = [[before, ""]];
+  const check = { [before]: 1 };
 
-const q = [1];
-const check = Array.from({ length: 101 }, () => 0);
-check[1] = 1;
+  while (q.length) {
+    const [number, command] = q.shift();
 
-for (let i = 0, days = 1; i < q.length; days++) {
-  for (const { length } = q; i < length; ) {
-    const cur = q[i++];
-    for (let j = 1; j <= 6; j++) {
-      const next = cur + j;
+    if (number === after) {
+      answer.push(command);
+      return;
+    }
 
-      if (next === 100) {
-        console.log(days);
-        return;
-      }
-      if (next > 100) continue;
-      if (map.has(next) && !check[next]) {
-        q.push(map.get(next));
-        check[map.get(next)] = 1;
-        check[next] = 1;
-        continue;
-      }
+    // D
+    const n1 = (number * 2) % 10000;
+    if (!check[n1]) {
+      q.push([n1, command + "D"]);
+      check[n1] = 1;
+    }
 
-      if (!check[next]) {
-        q.push(next);
-        check[next] = 1;
-      }
+    // S
+    const n2 = number === 0 ? 9999 : number - 1;
+    if (!check[n2]) {
+      q.push([n2, command + "S"]);
+      check[n2] = 1;
+    }
+
+    // L
+    const n3 = (number % 1000) * 10 + Math.floor(number / 1000);
+    if (!check[n3]) {
+      q.push([n3, command + "L"]);
+      check[n3] = 1;
+    }
+
+    // R
+    const n4 = (number % 10) * 1000 + Math.floor(number / 10);
+    if (!check[n4]) {
+      q.push([n4, command + "R"]);
+      check[n4] = 1;
     }
   }
+};
+
+for (let i = 0; i < test.length; i++) {
+  bfs(test[i][0], test[i][1]);
 }
+
+console.log(answer.join("\n"));

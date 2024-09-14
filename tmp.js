@@ -1,6 +1,4 @@
-const a = [1, 2, 5, 3, 4];
-const map = new Map();
+const tmp = 1012;
+const a = { [tmp]: true };
 
-map.set(1, 0);
-
-console.log(map.get(1));
+console.log(a);
