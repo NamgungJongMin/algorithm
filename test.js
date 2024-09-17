@@ -1,19 +1,22 @@
 const fs = require("fs");
 
 const input = fs.readFileSync("test.txt").toString().trim().split("\n");
-const M = +input[0];
-const t = input.slice(1).map((el) => el.split(" ").map((v) => v.trim()));
-const map = new Map();
-const allEl = Array.from({ length: 20 }, (_, index) => index + 1);
+const N = +input[0];
+const arr = input.slice(1).map(Number);
+const dp = Array.from({ length: N }, () => []);
 
-for ([command, x] of t) {
-  if (command === "add") map.set(Number(x), 1);
-  if (command === "remove") map.delete(Number(x));
-  if (command === "check") console.log(map.has(Number(x)) ? 1 : 0);
-  if (command === "toggle") map.has(Number(x)) ? map.delete(Number(x)) : map.set(Number(x), 1);
-  if (command === "all")
-    allEl.forEach((el) => {
-      map.set(el, 1);
-    });
-  if (command === "empty") map.clear();
+if (arr.length === 1) {
+  console.log(arr[0]);
+  return;
 }
+
+dp[0] = [arr[0], 0];
+dp[1] = [arr[1], arr[0] + arr[1]];
+
+for (let i = 2; i < dp.length; i++) {
+  const jump1 = dp[i - 1][0] + arr[i];
+  const jump2 = Math.max(...dp[i - 2]) + arr[i];
+
+  dp[i] = [jump2, jump1];
+}
+console.log(Math.max(...dp.at(-1)));
